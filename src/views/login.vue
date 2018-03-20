@@ -23,24 +23,28 @@ export default {
     }
   },
   created() {},
-  mounted() {
-    var that = this;
-    // that.session();
-  },
+  mounted(){  
+      if(this.Coo.getCookie("username")){  
+          window.location.href = '/#/index'; 
+      }  
+  }, 
   methods: {
     login() {
+      var self = this;
       var data = {
         username: this.userName,
         password: this.password
       }
        API.login(data).then(res => {
         if (res.success) {
+          self.Coo.setCookie("username",this.userName,1000*6);
           window.location.href = '/#/index';
         } else{
           alert(res.body)
         }
       });
-    }
+    },
+
     // session() {
     //   this.$http.get('/api/user/session', {
     //   },{}).then((response) => {

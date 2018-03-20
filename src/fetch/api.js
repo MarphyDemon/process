@@ -74,7 +74,50 @@ export default {
     },
     change(params){
         return fetch(domain + '/api/user/change',params);
-    }
-  
-    
+    },
+    getAddress(params){
+        return fetch(domain + '/api/user/getAddress',params);
+    },
+    getExpress(params){
+        return fetch(domain + '/api/user/getExpress',params);
+    },
+    addAddress(params){
+        return fetch(domain + '/api/user/addAddress',params);
+    },
+    selectAddress(params){
+        return fetch(domain + '/api/user/selectAddress',params);
+    },
+    changeDefault(params){
+        return fetch(domain + '/api/user/changeDefaultAddress',params);
+    },
+    UpdateAddress(params){
+        return fetch(domain + '/api/user/UpdateAddress',params);
+    },
+    deleteAddress(params){
+        return fetch(domain + '/api/user/deleteAddress',params);
+    },
+    createTask(params){
+        return fetch(domain + '/api/user/createTask',params);
+    },
+    getTaskList(params){
+        return fetch(domain + '/api/user/getTaskList',params);
+    },
+    createBuy(params){
+        return fetch(domain + '/api/user/createBuy',params);
+    },
+    getBuyList(params){
+        return fetch(domain + '/api/user/getBuyList',params);
+    },
+    selectTask(params){
+        return fetch(domain + '/api/user/selectTask',params);
+    },
+    selectBuy(params){
+        return fetch(domain + '/api/user/selectBuy',params);
+    },
+    logout(params){
+        return fetch(domain + '/api/user/logout',params);
+    },
+    session(params){
+        return fetch(domain + '/api/user/session',params);
+    },
 }

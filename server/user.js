@@ -3,6 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('cookie-session');
+
 function select(sql) {
     var promise = new Promise(function(resolve, reject) {
         var result = null;

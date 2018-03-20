@@ -2,9 +2,10 @@ var models = require('../db');
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var session = require('cookie-session');
+
+// var session = require("express-session");
+// var cookie = require("cookie-parser");
+
 var jsonWrite = function(res, params) {
     var result;
     if(typeof params === 'undefined'){
@@ -31,10 +32,7 @@ var api = {
     express,
     router,
     mysql,
-    bodyParser,
     conn,
     jsonWrite,
-    cookieParser,
-    session
 }
 module.exports = api;

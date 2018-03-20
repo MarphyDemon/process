@@ -1,8 +1,7 @@
 <template>
   <div class="hello">
     <form>
-      <input type="text" name="realname" placeholder="请输入姓名" v-model="realName"><br>
-      <input type="text" name="username" placeholder="请输入用户名" v-model="userName"><br>
+      <input type="text" name="username" placeholder="请输入姓名" v-model="userName"><br>
       <input type="text" name="sex" placeholder="请输入性别" v-model="sex"><br>
       <input type="text" name="college" placeholder="请输入学校" v-model="college"><br> 
       <input type="text" name="studentId" placeholder="请输入学号" v-model="studentId"><br>
@@ -20,7 +19,6 @@ export default {
     name: 'join',
     data () {
         return {
-        realName: '',
         userName: '',
         sex: '',
         college: '',
@@ -55,7 +53,6 @@ export default {
         addUser() {
             var that = this;
             var data = {
-                realname: that.realName,
                 username: that.userName,
                 sex: that.sex,
                 college: that.college,

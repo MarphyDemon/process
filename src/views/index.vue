@@ -1,5 +1,6 @@
 <template>
     <div class="indexpage">
+        <x-header :left-options="{showBack: false}">快递广场</x-header>
         <div class="select-arr">
             <div class="select-term">
                 <group>
@@ -10,88 +11,158 @@
             </div>
             <div class="select-term">
                 <group>
-                    <popup-picker placeholder="快递公司" :data="expresslist" v-model="express" @on-change="ChangeExp"></popup-picker>
+                    <popup-picker placeholder="快递公司" :data="expresslist" v-model="express" @on-change="ChangeExp">
+                    </popup-picker>
                 </group>
             </div>
             <div class="select-term">
                 <group>
                     <datetime v-model="sTime" placeholder="送达时间" format="YYYY-MM-DD HH:mm" @on-change="changeSTime" year-row="{value}年"
                         month-row="{value}月" :display-format="Dateformatter" day-row="{value}日" hour-row="{value}点" minute-row="{value}分" 
-                        clear-text="清除" @on-clear="clearValue" confirm-text="完成" cancel-text="取消">
+                        clear-text="清除" @on-clear="clearValue" confirm-text="完成" cancel-text="取消" :min-year='Year' :max-year='Year'>
                     </datetime>
                 </group>
             </div>
         </div>
+        <Todo></Todo>
+        <Menu></Menu>
     </div>
 </template>
 
 <script>
-import { PopupPicker, Group, Cell, Datetime } from 'vux'
+import API from '../fetch/api.js'
+import Menu from '../components/menu'
+import { PopupPicker, Group, Cell, Datetime, XHeader, } from 'vux'
+import Todo from '../components/todo'
+import { add } from '../util/tool';
 export default {
     name: 'index',
     components: {
         Cell,
         Group,
         PopupPicker,
-        Datetime
+        Datetime,
+        Menu,
+        XHeader,
+        Todo
     },
     created() {
 
     },
     mounted() {
-        this.changeStyle();
+        var self = this;
+        self.init();
     },
     data() {
         return {
-            expresslist: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']],
-            addrlist: [{
-                    name: '中国',
-                    value: 'china',
-                    parent: 0
-                }, {
-                    name: '美国',
-                    value: 'USA',
-                    parent: 0
-                }, {
-                    name: '广东',
-                    value: 'china001',
-                    parent: 'china'
-                }, {
-                    name: '广西',
-                    value: 'china002',
-                    parent: 'china'
-                }, {
-                    name: '美国001',
-                    value: 'usa001',
-                    parent: 'USA'
-                }, {
-                    name: '美国002',
-                    value: 'usa002',
-                    parent: 'USA'
-                }],
+            expresslist: [],
+            addrlist: [],
             address: [],
             express: [],
             sTime: '',
-            serviceTime: '14'
+            serviceTime: '14',
+            Year: new Date().getFullYear(),
+            TaskList: []
         }
     },
     methods: {
+        init() {
+            var self = this;
+            self.getAddress();
+            self.getExpress();
+            self.changeStyle();
+            self.getTaskList();
+            // self.getsession();
+        },
+        // getsession(){
+        //     var self = this;
+        //     API.session().then(res => {
+        //         if(res.success){
+        //             console.log(res)
+        //         }else{
+        //             console.log(res)
+        //         }
+        //     })
+        // },
+        getAddress() {
+            var self = this;
+            API.getAddress().then(res => {
+                if(res.success){
+                    self.addrlist = res.body.data;
+                }else{
+                    console.log(res.body)
+                }
+            })
+        },
+        getExpress() {
+            var self = this;
+                API.getExpress().then(res => {
+                    if(res.success){
+                        self.expresslist = res.body.data;
+                    }else{
+                        console.log(res.body)
+                    }
+                })
+        },
         changeStyle() {
             var arr = document.getElementsByClassName('vux-popup-picker-select');
             for(var i=0;i<arr.length;i++){
                 arr[i].style.textAlign = "center";
             }
         },
-        ChangeAddress(val) {
+        ChangeAddress() {
+            var self = this;
+            var address='';
+            if(self.address.length>0){address =self.address[0]+"-"+self.address[1]+"-%";}
+            var options = {
+                taskAddress: address,
+                taskexpress: self.express[0],
+                lastTime: self.sTime
+            }
+            API.selectTask(options).then(res => {
+                if(res.success){
+                    self.TaskList = res.body.data;
+                }else{
+                    console.log(res.body)
+                }
+            })
         },
-        ChangeExp (val) {
-            console.log('val change', val)
+        ChangeExp () {
+            var self = this;
+            var address='';
+            if(self.address.length>0){address =self.address[0]+"-"+self.address[1]+"-%";}
+            var options = {
+                taskAddress: address,
+                taskexpress: self.express[0],
+                lastTime: self.sTime
+            }
+            API.selectTask(options).then(res => {
+                if(res.success){
+                    self.TaskList = res.body.data;
+                }else{
+                    console.log(res.body)
+                }
+            })
         },
         clearValue (value) {
-            this.value6 = ''
+            this.sTime = ''
         },
-        changeSTime(value) {
-            console.log('change', value)
+        changeSTime() {
+            var self = this;
+            var address='';
+            if(self.address.length>0){address =self.address[0]+"-"+self.address[1]+"-%";}
+            var options = {
+                taskAddress: address,
+                taskexpress: self.express[0],
+                lastTime: self.sTime
+            }
+            API.selectTask(options).then(res => {
+                if(res.success){
+                    self.TaskList = res.body.data;
+                }else{
+                    console.log(res.body)
+                }
+            })
         },
         addrformatter(val) {
             var that = this;
@@ -104,6 +175,19 @@ export default {
         },
         Dateformatter (val) {
             return val.slice(5,16);
+        },
+        getTaskList(){
+            var self = this;
+            var options = {
+                status: 0
+            }
+            API.getTaskList(options).then(res => {
+                if(res.success){
+                    self.TaskList = res.body.data;
+                }else{
+                    console.log(res.body);
+                }
+            })
         }
     }
 }
@@ -111,7 +195,6 @@ export default {
 
 <style lang="scss" scoped>
     .indexpage{
-        margin: 0 10px 0 10px;
         .select-arr{
             display: flex;
             .select-term{
@@ -120,5 +203,6 @@ export default {
             }
         }
     }
+   
     
 </style>

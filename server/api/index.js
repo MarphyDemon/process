@@ -1,25 +1,28 @@
 var $api = require('./api');
+var outIndex = require('../controller/index');
 
-$api.router.post('/login',(req, res) => {
-	var params = req.body;
-	var sql = "select * from user where username='"+ params.username + "' and password='" + params.password +"'";
+$api.router.post('/getAddress',(req, res) => {
+	var params = req.body;  
+	var sql = "SELECT name,value,parent FROM address";
 	$api.conn.query(sql, function(err, result){
 		if (err)  {
 			console.log(err);
 		}
 		if (result) {
-            console.log(result)
-            $api.jsonWrite(res, result);
+            	outIndex.outputAddress(res, result);
 		}	
 	})
 })
-//获取 session
-// $api.router.get("/session",function(req, res) {
-//     console.log("user in session");
-//     console.log(req.session.user);
-//     res.json({
-//         user: req.session.user
-//     });
-//     res.end();
-// })
+$api.router.post('/getExpress',(req, res) => {
+	var params = req.body;  
+	var sql = "SELECT name FROM express";
+	$api.conn.query(sql, function(err, result){
+		if (err)  {
+			console.log(err);
+		}
+		if (result) {
+            	outIndex.outputExpress(res, result);
+		}	
+	})
+})
 module.exports = $api.router;
