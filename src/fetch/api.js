@@ -120,4 +120,35 @@ export default {
     session(params){
         return fetch(domain + '/api/user/session',params);
     },
+    startTask(params){
+        return fetch(domain + '/api/user/startTask',params);
+    },
+    startBuy(params){
+        return fetch(domain + '/api/user/startBuy',params);
+    },
+
+    receiptTask(params){
+        return fetch(domain + '/api/user/receiptTask',params);
+    },
+    serviceTask(params){
+        return fetch(domain + '/api/user/serviceTask',params);
+    },
+    sCommentTask(params){
+        return fetch(domain + '/api/user/sCommentTask',params);
+    },
+    gCommentTask(params){
+        return fetch(domain + '/api/user/gCommentTask',params);
+    },
+    receiptBuy(params){
+        return fetch(domain + '/api/user/receiptBuy',params);
+    },
+    serviceBuy(params){
+        return fetch(domain + '/api/user/serviceBuy',params);
+    },
+    sCommentBuy(params){
+        return fetch(domain + '/api/user/sCommentBuy',params);
+    },
+    gCommentBuy(params){
+        return fetch(domain + '/api/user/gCommentBuy',params);
+    }
 }

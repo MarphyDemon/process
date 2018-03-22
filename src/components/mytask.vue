@@ -27,10 +27,28 @@
                     <label>金额:</label>
                     <span>{{ item.money|currency('￥',2) }}</span>
                 </div>
-                <div class="right-msg" v-if="item.quick=='1'">
-                    <img src="../assets/img/urgent.png" alt="">
+                <div class="right-msg">
+                    <label>状态:</label>
+                    <span v-if="item.status == 0" style="color: blue;">已发布</span>
+                    <span v-if="item.status == 1" style="color: blue;">配送中</span>
+                    <span v-if="item.status == 2" style="color: green;">完成</span>
+                    <span v-if="item.status == 3" style="color: red;">失败</span>
                 </div>
             </div>
+            <div>
+                <div class="left-msg">
+                    <label>任务类型:</label>
+                    <span v-if="$parent.username == item.username">发布</span>
+                    <span v-if="$parent.username == item.gname">接单</span>
+                </div>
+                <div class="right-msg">
+                    <span v-if="$parent.username == item.username && item.status == 1" class="but" v-on:click="$parent.receiptTask(item.taskNumber)">确认收货</span>
+                    <span v-if="$parent.username == item.gname && item.gStatus == 0" class="but" v-on:click="$parent.serviceTask(item.taskNumber)">确认送达</span>
+                </div>
+            </div>
+        </div>
+        <div class="quick" v-if="item.quick=='1'">
+            <img src="../assets/img/urgent.png" alt="">
         </div>
     </div>
 </div>
@@ -63,11 +81,12 @@ export default {
         margin: 20px auto;
         padding: 10px 0px 0px 16px;
         width: 90%;
-        height: 110px;
+        height: 130px;
         font-size: 12px;
         border: 1px solid #222;
         border-radius: 10px;
         color: #444;
+        position: relative;
         .left{
             width: 80%;
             float: left;
@@ -81,9 +100,14 @@ export default {
             .right-msg{
                 width: 50%;
                 display: inline-block;
-                img{
-                    width: 30px;
-                }
+            }
+        }
+        .quick{
+            position: absolute;
+            top: 30%;
+            right: 20px;
+            img{
+                width: 40px;
             }
         }
     }

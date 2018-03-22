@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="right">
+        <div class="right" v-on:click="$parent.startTask(item.username,item.taskNumber)">
             <img src="../assets/img/rob.png" alt="">
         </div>
     </div>

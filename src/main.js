@@ -15,7 +15,9 @@ import VueResource from 'vue-resource'
 import * as filters from './util/filter'
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k])) //注册过滤器
 import Coo from './assets/js/cookie.js'
+import Common from './assets/js/common.js'
 Vue.prototype.Coo = Coo
+Vue.prototype.Common = Common
 // import { PopupPicker, Group } from 'vux'
 // Vue.use(PopupPicker)
 // Vue.use(Group)

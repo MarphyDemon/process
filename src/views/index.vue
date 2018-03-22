@@ -188,7 +188,28 @@ export default {
                     console.log(res.body);
                 }
             })
-        }
+        },
+        // 接单开始任务 任务配送中
+        startTask(username,taskNumber){
+            var self = this;
+            if(username == self.Coo.getCookie('username')){
+                alert("不能自己接单！！！");
+                return ;
+            }
+            var options = {
+                gname: self.Coo.getCookie('username'),
+                startTime: self.Common.getDate(new Date(),"yyyy-MM-dd hh:mm"),
+                taskNumber: taskNumber
+            };
+            API.startTask(options).then(res => {
+                if(res.success){
+                    alert("接单成功，请立即配送！");
+                    self.getTaskList();
+                }else{
+                    console.log(res.body);
+                }
+            })
+        },
     }
 }
 </script>

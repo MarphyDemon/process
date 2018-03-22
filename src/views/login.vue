@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
     <form>
-      <input type="text" name="username" v-model="userName"><br>
-      <input type="password" name="password" v-model="password"><br>
+      <x-input type="text" name="username" v-model="userName"></x-input>
+      <x-input type="password" name="password" v-model="password"></x-input>
       <a href="/#/forgot">忘记密码</a>
       <a href="/#/join">注册</a>
       <a href="javascript:;" @click="login">登录</a>
@@ -10,11 +10,12 @@
   </div>
 </template>
 <script>
+import { XButton,Group, XInput} from 'vux'
 import API from "../fetch/api.js";
 export default {
   name: 'login',
   components:{
-    
+    XButton,Group, XInput
   },
   data () {
     return {

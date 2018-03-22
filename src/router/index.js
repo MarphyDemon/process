@@ -11,6 +11,7 @@ import userCenter from '@/views/user-center'
 import addressList from '@/views/address-list'
 import address from '@/views/address'
 import createBuyTask from '@/views/createBuyTask'
+import comment from '@/views/comment'
 
 
 Vue.use(Router)
@@ -71,6 +72,11 @@ export default new Router({
       path: '/address',
       name: 'address',
       component: address
+    },
+    {
+      path: '/comment',
+      name: 'comment',
+      component: comment
     },
   ]
 })

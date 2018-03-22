@@ -36,7 +36,7 @@ export default {
         ButtonTab,
         ButtonTabItem,
         MyTask,
-        MyBuy
+        MyBuy,
     },
     data() {
         return {
@@ -47,6 +47,8 @@ export default {
             showMenus: false,
             TaskList: [],
             taskType: 0,
+            username: this.Coo.getCookie('username'),
+            taskNum: '',
         }
     },
     mounted() {
@@ -87,7 +89,57 @@ export default {
                     console.log(res.body);
                 }
             })
-        }
+        },
+        // type 1,2,3,4 分别代表快递任务雇主收货，配送员确认送达，代购任务雇主收货，配送员确认送达
+        receiptTask(taskNum){
+            var self = this;
+            self.taskNum = taskNum;
+            API.receiptTask({taskNumber: taskNum}).then(res => {
+                if(res.success){
+                    alert("确认收货成功！")
+                    self.$router.push({path: '/comment', query:{ taskNum: self.taskNum, type: 1}});
+                }else{
+                    console.log(res.body);
+                }
+            })
+        },
+        serviceTask(taskNum){
+            var self = this;
+            self.taskNum = taskNum;
+            API.serviceTask({taskNumber: taskNum}).then(res => {
+                if(res.success){
+                    alert("确认送达成功！")
+                    self.$router.push({path: '/comment', query:{ taskNum: self.taskNum, type: 2}});
+                }else{
+                    console.log(res.body);
+                }
+            })
+        },
+        receiptBuy(taskNum){
+            var self = this;
+            self.taskNum = taskNum;
+            console.log(taskNum)
+            API.receiptBuy({shopNum: taskNum}).then(res => {
+                if(res.success){
+                    alert("确认送达成功！")
+                    self.$router.push({path: '/comment', query:{ taskNum: self.taskNum, type: 3}});
+                }else{
+                    console.log(res.body);
+                }
+            })
+        },
+        serviceBuy(taskNum){
+            var self = this;
+            self.taskNum = taskNum;
+            API.serviceBuy({shopNum: taskNum}).then(res => {
+                if(res.success){
+                    alert("确认送达成功！")
+                    self.$router.push({path: '/comment', query:{ taskNum: self.taskNum, type: 4}});
+                }else{
+                    console.log(res.body);
+                }
+            })
+        },
     }
 }
 </script>

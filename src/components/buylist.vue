@@ -23,7 +23,7 @@
                 <span>{{ item.money|currency('￥',2) }}</span>
             </div>
         </div>
-        <div class="right">
+        <div class="right" v-on:click="$parent.startBuy(item.username, item.shopNum)">
             <img src="../assets/img/rob.png" alt="">
         </div>
     </div>
@@ -67,10 +67,18 @@ export default {
             float: left;
             display: block;
             line-height: 30px;
-            .left-msg{
-                width: 50%;
+            .msg{
                 display: block;
-                float: left;
+                label{
+                    float: left;
+                }
+                span{    
+                    max-width: 200px;
+                    display: block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
         }
         .right{

@@ -156,6 +156,26 @@ export default {
                     console.log(res.body);
                 }
             })
+        },
+        startBuy(username, shopNum){
+            var self = this;
+             if(username == self.Coo.getCookie('username')){
+                alert("不能自己接单！！！");
+                return ;
+            }
+            var options = {
+                gname: self.Coo.getCookie('username'),
+                startTime: self.Common.getDate(new Date(),"yyyy-MM-dd hh:mm"),
+                shopNum: shopNum
+            };
+            API.startBuy(options).then(res => {
+                if(res.success){
+                    alert("接单成功，请立即配送！");
+                    self.getBuyList();
+                }else{
+                    console.log(res.body);
+                }
+            })
         }
     }
 }
